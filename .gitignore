@@ -1,0 +1,11 @@
+node_modules/
+.vscode
+.DS_Store
+
+# Build output — published to npm, never committed.
+dist/
+storybook-static/
+*.tgz
+
+*.log
+npm-debug.log*

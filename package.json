@@ -1,0 +1,53 @@
+{
+  "name": "@chordialguy/keyboard",
+  "version": "1.0.0",
+  "description": "A playable piano keyboard web component with Western and sargam labels, and synthesised instruments",
+  "keywords": ["piano", "keyboard", "web-components", "lit", "sargam", "swara", "indian-classical", "web-audio", "music-education"],
+  "author": "Ishu Madan",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishumadan91/chordialguy-keyboard.git"
+  },
+  "homepage": "https://github.com/ishumadan91/chordialguy-keyboard#readme",
+  "bugs": "https://github.com/ishumadan91/chordialguy-keyboard/issues",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./iife": "./dist/chordialguy-keyboard.iife.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc --noEmit",
+    "build": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && vite build --mode lib",
+    "prepublishOnly": "npm run build",
+    "storybook": "storybook dev -p 6007",
+    "build-storybook": "storybook build"
+  },
+  "peerDependencies": {
+    "lit": "^3.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.4.7",
+    "@storybook/web-components": "^8.4.7",
+    "@storybook/web-components-vite": "^8.4.7",
+    "lit": "^3.2.1",
+    "storybook": "^8.4.7",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  }
+}

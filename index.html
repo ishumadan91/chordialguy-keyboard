@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@chordialguy/keyboard playground</title>
+    <style>
+      body { font-family: system-ui, sans-serif; background: #f4f1de; color: #2e2e2e; margin: 0; padding: 24px 16px; }
+      main { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; }
+      fieldset { display: flex; flex-wrap: wrap; gap: 12px; border: 1px solid #ddd; border-radius: 8px; }
+      label { display: inline-flex; gap: 6px; align-items: center; font-size: 14px; }
+      input[type='text'] { width: 9em; }
+      #log { font: 12px/1.4 ui-monospace, monospace; min-height: 3em; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>@chordialguy/keyboard</h1>
+      <fieldset id="controls">
+        <label>from <input type="text" name="from" value="C4" /></label>
+        <label>to <input type="text" name="to" value="B5" /></label>
+        <label>tonic <input type="text" name="tonic" value="C4" /></label>
+        <label>notation
+          <select name="notation"><option>western</option><option>indian</option></select>
+        </label>
+        <label>labels
+          <select name="labels"><option>all</option><option>white</option><option>tonic</option><option>none</option></select>
+        </label>
+        <label>instrument <select name="instrument"></select></label>
+        <label>notes <input type="text" name="notes" placeholder="C D E G4" /></label>
+        <label>degrees <input type="text" name="degrees" placeholder="0 2 4 5 7 9 11" /></label>
+        <label>outside
+          <select name="outside"><option>disable</option><option>dim</option></select>
+        </label>
+      </fieldset>
+      <cg-keyboard id="kb"></cg-keyboard>
+      <div id="log"></div>
+    </main>
+    <script type="module">
+      import { listInstruments } from '/src/index.ts';
+
+      const kb = document.getElementById('kb');
+      const log = document.getElementById('log');
+      const instrument = document.querySelector('[name=instrument]');
+      for (const [name, label] of listInstruments()) instrument.add(new Option(label, name));
+
+      document.getElementById('controls').addEventListener('input', (e) => {
+        const { name, value } = e.target;
+        kb[name] = ['notes', 'degrees'].includes(name) ? value || null : value;
+      });
+      kb.addEventListener('cg-note-press', (e) => {
+        const { name, octave, swara, pitch } = e.detail;
+        log.textContent = `${name}${octave} · ${swara.name}${swara.komal ? ' komal' : ''}${swara.tivra ? ' tivra' : ''} (${swara.saptak}) · MIDI ${pitch}`;
+      });
+    </script>
+  </body>
+</html>
