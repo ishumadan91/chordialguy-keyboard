@@ -5,6 +5,7 @@ node_modules/
 # Build output — published to npm, never committed.
 dist/
 storybook-static/
+site-dist/
 *.tgz
 
 *.log

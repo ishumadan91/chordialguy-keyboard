@@ -5,6 +5,8 @@ note filters, lit keys for playback — with synthesised instruments and no
 audio assets. Lit + TypeScript. Built for the
 [Learn with Chordial Guy](https://github.com/ishumadan91) practice apps.
 
+**[Live examples →](https://ishumadan91.github.io/chordialguy-keyboard/)**
+
 ## Install
 
 ```bash
@@ -37,6 +39,7 @@ chordialguy-keyboard`).
 ```bash
 npm run dev        # playground (index.html) with live controls
 npm run storybook  # every configuration, on :6007
+npm run site       # the examples page (site/), deployed to GitHub Pages on push to main
 npm run build      # dist/: ESM + .d.ts (tsc) and the IIFE (vite)
 ```
 

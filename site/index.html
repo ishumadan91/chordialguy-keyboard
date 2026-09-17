@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@chordialguy/keyboard</title>
+    <meta
+      name="description"
+      content="A playable piano keyboard web component with Western and sargam labels, scale filters and synthesised instruments."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Mukta:wght@400;500;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="bar">
+      <a class="wordmark" href="./">@chordialguy/keyboard</a>
+      <nav>
+        <a href="#examples">Examples</a>
+        <a href="https://github.com/ishumadan91/chordialguy-keyboard">GitHub</a>
+        <a href="https://www.npmjs.com/package/@chordialguy/keyboard">npm</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <h1>A piano keyboard that reads sargam as well as C&nbsp;D&nbsp;E.</h1>
+          <p class="lede">
+            <code>&lt;cg-keyboard&gt;</code> is a web component for music learning apps. It
+            labels keys in Western notes or sargam, limits play to a scale or raag, lights keys
+            in time with a melody, and plays three synthesised instruments with no audio files.
+          </p>
+          <div class="install">
+            <pre><code>npm install @chordialguy/keyboard lit</code></pre>
+            <button type="button" class="copy-install" data-copy="npm install @chordialguy/keyboard lit">Copy</button>
+          </div>
+        </div>
+
+        <div id="readout" class="readout" aria-live="polite">
+          <cg-swara id="readout-glyph" name="S" saptak="madhya"></cg-swara>
+          <p>
+            <strong id="readout-spoken">Sa</strong>
+            <span id="readout-midi">Play a key</span>
+          </p>
+        </div>
+
+        <div class="hero-play">
+          <form id="hero-controls" class="controls" onsubmit="return false">
+            <fieldset class="segmented">
+              <legend class="visually-hidden">Notation</legend>
+              <label><input type="radio" name="notation" value="indian" checked /> Sargam</label>
+              <label><input type="radio" name="notation" value="western" /> Western</label>
+            </fieldset>
+            <label>
+              Sa on
+              <select id="hero-tonic">
+                <option value="C4">C</option>
+                <option value="C#4">C♯</option>
+                <option value="D4">D</option>
+                <option value="D#4">D♯</option>
+                <option value="E4">E</option>
+                <option value="F4">F</option>
+                <option value="F#4">F♯</option>
+                <option value="G3">G</option>
+                <option value="G#3">G♯</option>
+                <option value="A3">A</option>
+                <option value="A#3">A♯</option>
+                <option value="B3">B</option>
+              </select>
+            </label>
+            <label>
+              Instrument
+              <select id="hero-instrument"></select>
+            </label>
+          </form>
+          <cg-keyboard
+            id="hero-keyboard"
+            class="hero-keyboard"
+            from="G3"
+            to="G5"
+            notation="indian"
+            tonic="C4"
+            label="Try the keyboard"
+          ></cg-keyboard>
+        </div>
+      </section>
+
+      <section class="usage" aria-labelledby="usage-title">
+        <h2 id="usage-title">Add it to a page</h2>
+        <div class="usage-grid">
+          <div>
+            <h3>With a bundler</h3>
+            <p>Importing the package registers <code>&lt;cg-keyboard&gt;</code> and <code>&lt;cg-swara&gt;</code>. Lit is a peer dependency, so your app and the keyboard share one copy.</p>
+            <figure class="code">
+              <figcaption><span>JavaScript</span><button type="button" class="copy">Copy</button></figcaption>
+              <pre><code>import '@chordialguy/keyboard';
+import { playNote } from '@chordialguy/keyboard';</code></pre>
+            </figure>
+          </div>
+          <div>
+            <h3>Without one</h3>
+            <p>A single classic script with Lit bundled in. It registers both elements and puts the functions on <code>window.ChordialGuyKeyboard</code>.</p>
+            <figure class="code">
+              <figcaption><span>HTML</span><button type="button" class="copy">Copy</button></figcaption>
+              <pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/@chordialguy/keyboard@1/dist/chordialguy-keyboard.iife.js"&gt;&lt;/script&gt;
+&lt;cg-keyboard from="C3" to="B4"&gt;&lt;/cg-keyboard&gt;</code></pre>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="examples" class="examples" aria-labelledby="examples-title">
+        <div class="examples-head">
+          <h2 id="examples-title">Examples</h2>
+          <p>Each demo runs the code shown under it.</p>
+          <ul id="examples-toc" class="toc"></ul>
+        </div>
+        <div id="examples-list"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>
+        MIT licensed. Built for the Learn with Chordial Guy practice apps. The
+        <a href="https://github.com/ishumadan91/chordialguy-keyboard#readme">README</a>
+        lists every property, event and custom property.
+      </p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

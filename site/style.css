@@ -1,0 +1,490 @@
+/* Colours are the keyboard's own defaults: navy key text, coral for a lit
+   key, teal focus. The page reads as the same object as the component. */
+:root {
+  --paper: #f3f6f7;
+  --surface: #ffffff;
+  --ink: #003049;
+  --muted: #4b6573;
+  --rule: #d2dce1;
+  --coral: #ff6f61;
+  --coral-wash: #ffd9d4;
+  --teal: #00696b;
+  --code-bg: #e7eef1;
+  --button-bg: #003049;
+  --button-ink: #ffffff;
+
+  --sans: 'Mukta', 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #051b26;
+    --surface: #0b2a38;
+    --ink: #e3edf1;
+    --muted: #9bb3be;
+    --rule: #1d4252;
+    --coral-wash: #5a2b2a;
+    --teal: #5cc4c4;
+    --code-bg: #08222e;
+    --button-bg: #ff6f61;
+    --button-ink: #051b26;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-inline: var(--gutter);
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.0625rem/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+main,
+.bar,
+.foot {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+a {
+  color: var(--teal);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+}
+h3 {
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+p {
+  margin: 0;
+}
+p + p {
+  margin-top: 0.75em;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  /* Readers copy what they see: => must not render as an arrow glyph. */
+  font-variant-ligatures: none;
+}
+:not(pre) > code {
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
+  background: var(--code-bg);
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+button {
+  font: 500 0.95rem/1 var(--sans);
+  color: var(--button-ink);
+  background: var(--button-bg);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.7em 1.1em 0.6em;
+  cursor: pointer;
+}
+button:hover {
+  filter: brightness(1.15);
+}
+
+select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.3em 0.5em;
+}
+
+/* ------------------------------------------------------------- bar --- */
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding-block: 1.25rem;
+}
+.wordmark {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+.bar nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+/* ------------------------------------------------------------ hero --- */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'text readout'
+    'play play';
+  gap: 2.5rem clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  padding-block: clamp(2rem, 6vw, 4.5rem) 4.5rem;
+}
+.hero-text {
+  grid-area: text;
+  max-width: 42rem;
+}
+.hero h1 {
+  font-size: clamp(2.6rem, 6.2vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+.lede {
+  margin-top: 1.5rem;
+  max-width: 36rem;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+.lede code {
+  color: var(--ink);
+}
+
+.install {
+  display: flex;
+  align-items: stretch;
+  margin-top: 2rem;
+  max-width: 30rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.install pre {
+  flex: 1;
+  margin: 0;
+  padding: 0.85rem 1rem 0.75rem;
+  overflow-x: auto;
+}
+.install button {
+  border-radius: 0;
+}
+
+/* One oversized white key, labelled the way the keyboard labels its keys:
+   at the bottom, with the swara marks. It flashes the lit-key colour on each
+   note, so it moves when the keyboard is played and never on its own. */
+.readout {
+  grid-area: readout;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: clamp(9rem, 17vw, 13rem);
+  aspect-ratio: 5 / 11;
+  max-height: 26rem;
+  padding: 1rem 0.75rem 1.4rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-top: 0;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 1px 0 var(--rule), inset 0 6px 0 var(--ink);
+  text-align: center;
+}
+.readout cg-swara {
+  font-size: clamp(4.5rem, 9vw, 7.5rem);
+  font-weight: 700;
+  --cg-swara-octave-weight: 500;
+}
+.readout p {
+  display: grid;
+  margin-top: 0.4rem;
+  line-height: 1.3;
+}
+.readout strong {
+  font-weight: 700;
+  text-transform: none;
+}
+.readout span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.readout.struck {
+  animation: strike 700ms ease-out;
+}
+@keyframes strike {
+  from {
+    background: var(--coral-wash);
+    border-color: var(--coral);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .readout.struck {
+    animation: none;
+  }
+}
+
+.hero-play {
+  grid-area: play;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.segmented {
+  display: inline-flex;
+  margin: 0;
+  padding: 3px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+}
+.segmented label {
+  position: relative;
+  padding: 0.3em 0.9em 0.2em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.segmented input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.segmented label:has(input:checked) {
+  background: var(--ink);
+  color: var(--paper);
+}
+.segmented label:has(input:focus-visible) {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.hero-keyboard {
+  --cg-keyboard-height: clamp(150px, 20vw, 210px);
+  --cg-key-min-width: 38px;
+  --cg-key-label-size: 15px;
+  --cg-black-key-label-size: 12px;
+  --cg-keyboard-radius: 10px;
+  --cg-keyboard-background: var(--ink);
+  --cg-keyboard-padding: 10px 10px 0;
+}
+
+/* ----------------------------------------------------------- usage --- */
+
+.usage,
+.examples {
+  padding-block: 4rem;
+  border-top: 1px solid var(--rule);
+}
+.usage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: 2rem 3rem;
+  margin-top: 2rem;
+}
+.usage-grid p {
+  margin-block: 0.5rem 1rem;
+  max-width: 34rem;
+}
+
+/* ------------------------------------------------------------ code --- */
+
+.code {
+  margin: 0;
+  border-radius: 8px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+.code figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.35rem 0.4rem 0 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.code button {
+  padding: 0.45em 0.8em 0.35em;
+  font-size: 0.85rem;
+  color: var(--teal);
+  background: transparent;
+}
+.code button:hover {
+  filter: none;
+  text-decoration: underline;
+}
+.code pre {
+  margin: 0;
+  padding: 0.5rem 1rem 1rem;
+  overflow-x: auto;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* -------------------------------------------------------- examples --- */
+
+.examples-head p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.example {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: 1.5rem clamp(2rem, 5vw, 4rem);
+  padding-block: 3.5rem;
+  scroll-margin-top: 1rem;
+}
+.example + .example {
+  border-top: 1px solid var(--rule);
+}
+.example-text {
+  align-self: start;
+  position: sticky;
+  top: 1.5rem;
+}
+.example-text h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.example-text h3 a:hover {
+  text-decoration: underline;
+}
+.example-text h3 + p {
+  margin-top: 0.75rem;
+}
+.example-text p {
+  color: var(--muted);
+}
+.example-text code {
+  color: var(--ink);
+  white-space: normal;
+}
+.example-stage {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Demo panels take the key's shape: square at the top, rounded below. */
+.demo {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ink);
+  border-radius: 0 0 14px 14px;
+}
+.demo cg-keyboard {
+  justify-self: stretch;
+}
+.demo label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.demo p {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------ foot --- */
+
+.foot {
+  padding-block: 2.5rem 3rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------- narrow --- */
+
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'text' 'play' 'readout';
+    gap: 2rem;
+  }
+  .readout {
+    width: 100%;
+    aspect-ratio: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--rule);
+    border-radius: 12px;
+    box-shadow: none;
+    text-align: left;
+  }
+  .readout cg-swara {
+    font-size: 3.5rem;
+  }
+  .example {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 2.5rem;
+  }
+  .example-text {
+    position: static;
+  }
+  .demo {
+    padding: 1rem;
+  }
+}

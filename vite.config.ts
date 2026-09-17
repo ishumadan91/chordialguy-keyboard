@@ -25,6 +25,20 @@ export default defineConfig(({ mode }) => {
     };
   }
 
+  if (mode === 'site') {
+    // The demo page (site/), deployed to GitHub Pages. It imports src/
+    // directly, so it always shows the code in the repo. `base: './'` keeps
+    // asset URLs working under the /chordialguy-keyboard/ project path.
+    return {
+      root: 'site',
+      base: './',
+      build: {
+        outDir: '../site-dist',
+        emptyOutDir: true,
+      },
+    };
+  }
+
   // `npm run dev` — the playground in index.html.
   return {};
 });
